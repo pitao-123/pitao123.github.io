@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            perspective: 1000px;
+        }
+
+        .card {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 10s infinite linear;
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 0 0 10px #fff;
+        }
+
+        @keyframes rotate {
+            from { transform: rotateY(0deg) rotateX(20deg); }
+            to { transform: rotateY(360deg) rotateX(20deg); }
+        }
+
+        /* 粒子特效 */
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: rgba(255,255,255,0.8);
+            animation: float 5s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-800px) scale(0); opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">🎂 生日快乐！🎁</div>
+    </div>
+
+    <script>
+        // 生成随机粒子
+        function createParticle() {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 5000);
+        }
+
+        // 每秒生成10个粒子
+        setInterval(createParticle, 100);
+
+        // 3D文字内容
+        const messages = [
+            '健康常伴！',
+            '快乐永随！',
+            '梦想成真！',
+            '青春永驻！',
+            '万事胜意！'
+        ];
+        let index = 0;
+        setInterval(() => {
+            document.querySelector('.card').textContent = 
+                `🎉 ${messages[index++ % messages.length]} 🎊`;
+        }, 2000);
+    </script>
+</body>
+</html>
